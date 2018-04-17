@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDocumentsTable extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_customer')->unsigned();
             $table->foreign('id_customer')->references('id')->on('customers');
-            $table->integer('id_document_type')->unsigned();
-            $table->foreign('id_document_type')->references('id')->on('document_types');            
-            $table->string('link');
-            $table->smallinteger('status'); //0: not reviewed, 1: acepted, 2: rejected.
+            $table->integer('id_scheduled_payment')->unsigned();
+            $table->foreign('id_scheduled_payment')->references('id')->on('scheduled_payments');
+            $table->string('payment_method');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateDocumentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('payments');
     }
 }
